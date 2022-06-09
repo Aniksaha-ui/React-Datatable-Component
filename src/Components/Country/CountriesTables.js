@@ -9,6 +9,7 @@ const CountriesTables = () => {
   const getCountries = async () => {
     try {
       const response = await axios.get("https://restcountries.com/v2/all");
+      console.log(response.data);
       setCountries(response.data);
       setFilteredCountries(response.data);
     } catch (error) {
@@ -57,12 +58,28 @@ const CountriesTables = () => {
     getCountries();
   }, []);
 
+  function searchFunction(country) {
+    console.log(country?.nativeName);
+    const result = country.capital
+      ? country.capital
+          .toLowerCase()
+          .match(search ? search.toLocaleLowerCase() : "")
+      : "" || country.name
+      ? country.name
+          .toLowerCase()
+          .match(search ? search.toLocaleLowerCase() : "")
+      : "" || country.nativeName
+      ? country.nativeName
+          .toLowerCase()
+          .match(search ? search.toLocaleLowerCase() : "")
+      : "";
+    return result;
+  }
+
   useEffect(() => {
     console.log(search);
-    const result = countries.filter((country) => {
-      return country.name.toLowerCase().match(search.toLocaleLowerCase());
-    });
 
+    const result = countries.filter(searchFunction);
     setFilteredCountries(result);
   }, [search]);
 
