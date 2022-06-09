@@ -3,11 +3,14 @@ import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 const CountriesTables = () => {
   const [countries, setCountries] = useState([]);
-  const [search, setSearch] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filterCountries, setFilteredCountries] = useState([]);
+
   const getCountries = async () => {
     try {
       const response = await axios.get("https://restcountries.com/v2/all");
       setCountries(response.data);
+      setFilteredCountries(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -54,13 +57,22 @@ const CountriesTables = () => {
     getCountries();
   }, []);
 
+  useEffect(() => {
+    console.log(search);
+    const result = countries.filter((country) => {
+      return country.name.toLowerCase().match(search.toLocaleLowerCase());
+    });
+
+    setFilteredCountries(result);
+  }, [search]);
+
   return (
     <div>
       <h1>React Datatable -{countries.length}</h1>
       <DataTable
         title="All countries over the world"
         columns={columns}
-        data={countries}
+        data={filterCountries}
         pagination
         fixedHeader
         fixedHeaderScrollHeight="450px"
