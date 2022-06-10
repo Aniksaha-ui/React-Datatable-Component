@@ -59,17 +59,8 @@ const CountriesTables = () => {
   }, []);
 
   function searchFunction(country) {
-    console.log(country?.nativeName);
-    const result = country.capital
-      ? country.capital
-          .toLowerCase()
-          .match(search ? search.toLocaleLowerCase() : "")
-      : "" || country.name
+    const result = country.name
       ? country.name
-          .toLowerCase()
-          .match(search ? search.toLocaleLowerCase() : "")
-      : "" || country.nativeName
-      ? country.nativeName
           .toLowerCase()
           .match(search ? search.toLocaleLowerCase() : "")
       : "";
@@ -101,7 +92,7 @@ const CountriesTables = () => {
             onChange={(e) => setSearch(e.target.value)}
             className="form-control w-25"
             type="text"
-            placeholder="Enter anything"
+            placeholder="Enter Country"
           />
         }
       />
