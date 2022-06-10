@@ -68,34 +68,35 @@ const CountriesTables = () => {
   }
 
   useEffect(() => {
-    console.log(search);
-
     const result = countries.filter(searchFunction);
     setFilteredCountries(result);
   }, [search]);
 
   return (
-    <div>
-      <h1>React Datatable -{countries.length}</h1>
-      <DataTable
-        title="All countries over the world"
-        columns={columns}
-        data={filterCountries}
-        pagination
-        fixedHeader
-        fixedHeaderScrollHeight="450px"
-        highlightOnHover
-        subHeader
-        subHeaderComponent={
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="form-control w-25"
-            type="text"
-            placeholder="Enter Country"
-          />
-        }
-      />
+    <div className="mt-2">
+      <h1>All Countries -{countries.length}</h1>
+
+      <div className="ms-5 me-5">
+        <DataTable
+          title="All countries over the world"
+          columns={columns}
+          data={filterCountries}
+          pagination
+          fixedHeader
+          fixedHeaderScrollHeight="450px"
+          highlightOnHover
+          subHeader
+          subHeaderComponent={
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="form-control w-25"
+              type="text"
+              placeholder="Enter Country"
+            />
+          }
+        />
+      </div>
     </div>
   );
 };
